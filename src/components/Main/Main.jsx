@@ -28,7 +28,7 @@ export function Main() {
     }
 
     async function fetchListMessages(value) {
-        await fetch("http://localhost:3000/chat?thread_id=" + value)
+        await fetch("https://noktos-back.vercel.app/chat?thread_id=" + value)
             .then(response => {
                 return response.json()
             })
@@ -62,13 +62,13 @@ export function Main() {
     }
 
     useEffect(() => {
-        if (thread_local && messages == 0) {
+        if (thread_local && messages.length == 0) {
             fetchListMessages(thread_local)
         }
     }, [thread_local])
 
-    async function fetchData() {
-        await fetch("http://localhost:3000/chat", {
+    async function connectOpenAI() {
+        await fetch("https://noktos-back.vercel.app/chat", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ export function Main() {
         //Cuando el ultimo mensaje es del cliente deshabilita el envio de mensajes y carga la respuesta del bot
         if (messages[messages.length - 1].role == "user") {
             setInMessage(true)
-            fetchData()
+            connectOpenAI()
         }
 
         //Cuando termina de habilitar/deshabilitar el envio de mensaje y obtener el mensaje del bot scrollea donde se encuentran los mensajes hasta el fondo

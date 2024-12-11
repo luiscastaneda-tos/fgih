@@ -85,7 +85,7 @@ function Code(element) {
 
 function link(text) {
     let match = text.replace("[[", "").replace("]]", "")
-    let url = `http://localhost:3000/excel?data=${match}`
+    let url = `https://noktos-back.vercel.app/excel?data=${match}`
 
     return (
         <a href={url}><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" viewBox="0 0 16 16">
