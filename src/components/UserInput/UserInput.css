@@ -1,0 +1,167 @@
+form.typing {
+    justify-self: center;
+    position: relative;
+    width: calc(100% - 20px);
+    max-width: 900px;
+    height: auto;
+    max-height: 9rem;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    border-radius: 30px;
+    border: 1px solid var(--blue-300);
+    background-color: #fff;
+    transition: transform .5s linear;
+}
+
+form.active {
+    position: absolute;
+    bottom: 0;
+    transform: translateY(calc(-30vh + 50%));
+}
+
+form.active::after {
+    content: "Hola, soy el chat inteligente de noktos";
+    position: absolute;
+    text-align: center;
+    max-width: fit-content;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 150%;
+    font-size: 20px;
+    overflow: hidden;
+    border-right: .15em solid var(--blue-900);
+    white-space: nowrap;
+    margin: 0 auto;
+    animation:
+        typing 3.5s steps(48),
+        blink-caret .75s step-end infinite;
+}
+
+
+@keyframes typing {
+    from {
+        width: 0
+    }
+
+    to {
+        width: 100%
+    }
+}
+
+@keyframes blink-caret {
+
+    from,
+    to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: #065474;
+    }
+}
+
+form.typing textarea {
+    flex: 1;
+    padding: .5rem;
+    padding-top: .3rem;
+    margin-left: .7rem;
+    font-size: 16px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    resize: none;
+    overflow: auto;
+    /* border: 1px solid black; */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+textarea::-webkit-scrollbar {
+    display: none;
+}
+
+form.typing button {
+    padding: .7rem .5rem .5rem;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+form.typing button:disabled {
+    opacity: .5;
+}
+
+form.typing button:active {
+    background-color: var(--blue-200);
+}
+
+form.typing button:hover {
+    background-color: var(--blue-100);
+}
+#logoInit{
+    position: absolute;
+    bottom: 300%;
+    width: 200px;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+#circles {
+    stroke: #00c2ff;
+    fill: transparent;
+    stroke-width: 0.5%;
+    stroke-dasharray: 600;
+    animation: fillCircle 5s ease-in-out forwards;
+}
+
+#moons {
+    stroke: #FFFFFF;
+    fill: transparent;
+    stroke-width: 0.5%;
+    stroke-dasharray: 600;
+    animation: fillmoon 2.5s ease-in-out forwards;
+}
+
+@keyframes fillmoon {
+
+    0% {
+        stroke-dashoffset: 0;
+        fill: #FFFFFF;
+    }
+
+    60% {
+        stroke-dashoffset: 600;
+        fill: transparent;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+        fill: #FFFFFF;
+    }
+}
+
+@keyframes fillCircle {
+    0% {
+        stroke-dashoffset: 600;
+        fill: transparent;
+    }
+
+    25% {
+        fill: transparent;
+        stroke-dashoffset: 0;
+    }
+
+    50% {
+        stroke-dashoffset: 0;
+        fill: #00c2ff;
+    }
+
+    75% {
+        fill: transparent;
+        stroke-dashoffset: 0;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+        fill: #00c2ff;
+    }
+}

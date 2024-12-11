@@ -1,0 +1,206 @@
+/*contenedor bot*/
+.message-bot, .user-message{
+    align-self: flex-start;
+    width: 100%;
+    padding: 30px 8px 30px 40px;
+    height: fit-content;
+    word-wrap: break-word;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.11);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    opacity: 1;
+    position: relative;
+    color: #010025;
+    font-size: 15px;
+}
+/* .user-message {
+    width: 100%;
+    border-bottom: 1px solid #ecebeb;
+    padding: 30px 10px 30px 25px;
+    color: #062746;
+    position: relative;
+} */
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.message-bot:last-child {
+    opacity: 0;
+    animation: slideIn 0.3s forwards;
+    border: none;
+}
+
+/*Parrafos*/
+.message-bot p {
+    width: 100%;
+    text-wrap: pretty;
+}
+/*CODIGO*/
+.message-bot code {
+    background-color: var(--gris-claro);
+    padding: 1rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 13px;
+}
+
+/*titulo*/
+
+.message-bot h1 {
+    font-size: 1.7rem;
+}
+
+/*tabla*/
+
+.message-bot div.table-assistant {
+    width: 100%;
+    height: fit-content;
+    overflow: auto;
+    border-radius: 10px;
+    background-color: var(--white);
+    border: 1px solid var(--blue-300);
+}
+
+.message-bot div.table-assistant::-webkit-scrollbar {
+    height: 8px;
+}
+
+.message-bot div.table-assistant::-webkit-scrollbar-track {
+    background: var(--gris-claro);
+    border-radius: 10px;
+}
+
+.message-bot div.table-assistant::-webkit-scrollbar-thumb {
+    background: var(--blue-900);
+    border-radius: 10px;
+}
+
+.message-bot div.table-assistant table {
+    width: 100%;
+    text-align: start;
+    border-collapse: collapse;
+    font-size: 13px;
+    position: relative;
+}
+
+.message-bot div.table-assistant table th {
+    position: sticky;
+    text-align: start;
+    top: 0;
+    background-color: var(--blue-800);
+    border: 1px solid var(--blue-300);
+    color: var(--white);
+    border-top: none;
+    padding: 10px;
+    padding-right: 30px;
+    font-weight: 500;
+    text-wrap: nowrap;
+    width: fit-content;
+}
+
+.message-bot div.table-assistant table tr {
+    border-bottom: 1px solid var(--blue-200);
+}
+
+.message-bot div.table-assistant table tr:last-child {
+    border-bottom: none;
+}
+
+.message-bot div.table-assistant table td {
+    padding: 4px 8px;
+    border-right: 1px solid var(--blue-200);
+}
+
+.message-bot div.table-assistant table td:last-child {
+    border: none;
+}
+
+/*LISTA*/
+
+.message-bot ul {
+    margin-left: 2rem;
+    width: calc(100% - 4rem);
+}
+
+/*NEGRITAS*/
+
+.message-bot strong {
+    font-weight: 500;
+}
+
+/*link*/
+
+.message-bot a {
+    color: var(--white);
+    text-decoration: none;
+    padding: .7rem 1.5rem;
+    border-radius: 10px;
+    text-align: center;
+    width: fit-content;
+    background-color: #00c3ff;
+    border: 1px solid #01c0fa;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.459);
+    transition: box-shadow .2s ease-in;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.message-bot a span {
+    display: flex;
+    align-items: flex-end;
+    margin-top: 3px;
+}
+
+.message-bot a:hover {
+    box-shadow: none;
+}
+
+
+.bi-person-circle {
+    width: 33px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+#logo {
+    width: 33px;
+    position: absolute;
+    top: 32px;
+    left: 0;
+}
+
+#circle {
+    stroke: #00c2ff;
+    fill: transparent;
+    stroke-width: 0.5%;
+    stroke-dasharray: 600;
+    fill: #00c2ff;
+    /* animation: fillCirculo 6s ease-in-out infinite; */
+}
+
+#moon {
+    stroke: #FFFFFF;
+    fill: transparent;
+    stroke-width: 0.5%;
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+    fill: #FFFFFF;
+    /* animation: fillLuna 3s ease-in-out infinite; */
+}
