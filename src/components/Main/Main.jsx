@@ -27,22 +27,6 @@ export function Main() {
         if (inputValue != "") fetchListMessages(inputValue)
     }
 
-    async function fetchListMessages(value) {
-        await fetch("https://noktos-back.vercel.app/chat?thread_id=" + value)
-            .then(response => {
-                return response.json()
-            })
-            .then(data => {
-                if (data.error) throw new Error(data)
-                setMessages(data)
-                save(value)
-            })
-            .catch((error) => {
-                remove()
-                console.error('Error:', error);
-            });
-    }
-
     const handleSubmitMessage = (message) => {
         setMessages([...messages, {
             role: "user",
@@ -67,8 +51,23 @@ export function Main() {
         }
     }, [thread_local])
 
+    async function fetchListMessages(value) {
+        await fetch("https://noktos-backend.vercel.app/chat?thread_id=" + value)
+            .then(response => {
+                return response.json()
+            })
+            .then(data => {
+                if (data.error) throw new Error(data)
+                setMessages(data)
+                save(value)
+            })
+            .catch((error) => {
+                remove()
+                console.error('Error:', error);
+            });
+    }
     async function connectOpenAI() {
-        await fetch("https://noktos-back.vercel.app/chat", {
+        await fetch("https://noktos-backend.vercel.app/chat", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
