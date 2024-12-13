@@ -52,7 +52,7 @@ export function Main() {
     }, [thread_local])
 
     async function fetchListMessages(value) {
-        await fetch("https://noktos-backend.vercel.app/chat?thread_id=" + value)
+        await fetch("http://54.162.246.202:8080/chat?thread_id=" + value)
             .then(response => {
                 return response.json()
             })
@@ -67,7 +67,7 @@ export function Main() {
             });
     }
     async function connectOpenAI() {
-        await fetch("https://noktos-backend.vercel.app/chat", {
+        await fetch("http://54.162.246.202:8080/chat", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
