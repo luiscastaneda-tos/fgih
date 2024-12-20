@@ -208,10 +208,9 @@ function Table(element, index, array) {
     )
 }
 
-function separarTexto(texto){
+function separarTexto(texto, limite){
     const textoSeparado = texto.split(" ");
     const almacenarTextoSeparado = [];
-    const limite = 9;
     if(textoSeparado.length > limite){
         almacenarTextoSeparado.push(textoSeparado.slice(0,limite).join(" "));
         almacenarTextoSeparado.push(textoSeparado.slice(limite,textoSeparado.length).join(" "));
@@ -224,14 +223,14 @@ function ImagenCupon(element) {
     const parseado = JSON.parse(element.replaceAll("!", ""));
     const objetoCupon = parseado.cupon;
     const hotel = objetoCupon.hotel;
-    const direccion = separarTexto(objetoCupon.direccion);
+    const direccion = separarTexto(objetoCupon.direccion,9);
     const checkin = objetoCupon.checkin;
     const checkout = objetoCupon.checkout;
     const noches = objetoCupon.noches;
     const noktos = objetoCupon.noktos;
-    const precioPersona = objetoCupon.precio.toFixed(2);
-    const precioImpuestos = objetoCupon.impuestos.toFixed(2);
-    const desayuno = objetoCupon.notas;
+    const precioPersona = objetoCupon.precio;   
+    const precioImpuestos = objetoCupon.impuestos;
+    const desayuno = separarTexto(objetoCupon.notas,4);
     
 
     const canvasRef = useRef(null);
@@ -304,7 +303,9 @@ function ImagenCupon(element) {
         ctx.fillStyle = "#002060";
         ctx.fillText(noktos, centro + centro / 2, 550);
         ctx.fillStyle = "#FF0000"
-        ctx.fillText(desayuno, centro + centro / 2, 590);
+        for(let y = 0; y < desayuno.length; y++){
+            ctx.fillText(desayuno[y], centro + centro / 2, 590+y*25);
+        }
         drawTextRect(0, 640, 600, 85, "", "#000000", "#f8fc03");
         ctx.font = "bold 18px Calibri";
         ctx.fillStyle = "#002060";

@@ -9,6 +9,7 @@ import './Main.css'
 
 export function Main() {
     const divRef = useRef(null);
+    const [assistant, ] = useState("asst_QwPVn8JiHf2ZnYppN6v60Cb9");
     const [messages, setMessages] = useState([])
     const [inputValue, setInputValue] = useState("")
     const [inMessage, setInMessage] = useState(false)
@@ -74,7 +75,8 @@ export function Main() {
             },
             body: JSON.stringify({
                 thread_id: thread_local,
-                content: messages[messages.length - 1].content
+                content: messages[messages.length - 1].content,
+                assistantID : assistant
             }),
         })
             .then(response => {
