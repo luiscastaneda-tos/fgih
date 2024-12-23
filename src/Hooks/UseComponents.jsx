@@ -1,3 +1,7 @@
+import { text } from "framer-motion/client"
+import { useEffect } from "react"
+import { useRef } from "react"
+
 export function UseComponents(message) {
     const list = getCode(message.split("\n"))
     const lista_check = list.map((element, index, array) => {
@@ -19,12 +23,14 @@ export function UseComponents(message) {
         if (element == "") {
             return <></>
         }
+        if (element.includes('!!{"cupon":')) {
+            return ImagenCupon(element);
+        }
         else {
             return <p key={Math.random() * 123456789}>{handleBoldText(element)}</p>
         }
     })
-
-    return (lista_check)
+    return (lista_check);
 }
 
 function getCode(list) {
@@ -200,4 +206,132 @@ function Table(element, index, array) {
             </table>
         </div>
     )
+}
+
+function separarTexto(texto, limite){
+    const textoSeparado = texto.split(" ");
+    const almacenarTextoSeparado = [];
+    if(textoSeparado.length > limite){
+        almacenarTextoSeparado.push(textoSeparado.slice(0,limite).join(" "));
+        almacenarTextoSeparado.push(textoSeparado.slice(limite,textoSeparado.length).join(" "));
+        return almacenarTextoSeparado;
+    }
+    return [textoSeparado.join(" ")];
+}
+
+function ImagenCupon(element) {
+    const parseado = JSON.parse(element.replaceAll("!", ""));
+    const objetoCupon = parseado.cupon;
+    const hotel = objetoCupon.hotel;
+    const direccion = separarTexto(objetoCupon.direccion,9);
+    const checkin = objetoCupon.checkin;
+    const checkout = objetoCupon.checkout;
+    const noches = objetoCupon.noches;
+    const noktos = objetoCupon.noktos;
+    const precioPersona = objetoCupon.precio;   
+    const precioImpuestos = objetoCupon.impuestos;
+    const desayuno = separarTexto(objetoCupon.notas,4);
+    
+
+    const canvasRef = useRef(null);
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext("2d");
+
+        // Función para dibujar rectángulos con texto
+        function drawTextRect(x, y, width, height, text, textColor, bgColor) {
+            ctx.fillStyle = bgColor;
+            ctx.fillRect(x, y, width, height);
+
+            ctx.fillStyle = textColor;
+            ctx.font = "16px Calibri";
+            ctx.textAlign = "center";
+            ctx.fillText(text, x + width / 2, y + height / 2 + 5);
+        }
+
+        // Fondo blanco
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        const centro = canvas.width / 2;
+        // Títulos principales
+        ctx.font = "bold 18px Calibri";
+        ctx.textAlign = "left"
+        ctx.fillStyle = "#002060";
+        ctx.fillText("KONE México SA DE CV", centro, 90);
+        ctx.fillText("Cotización - Host", centro, 115);
+
+        ctx.textAlign = "center"
+        ctx.font = "bold 18px Calibri";
+
+        ctx.fillText("HOTEL", centro / 2, 150);
+        ctx.fillStyle = "#0070C0";
+        ctx.fillText(hotel, centro, 190)
+        ctx.fillStyle = "#002060";
+        ctx.fillText("Dirección", centro / 2, 220);
+        ctx.font = "18px Calibri";
+        for(let y = 0; y < direccion.length; y++){
+            ctx.fillText(direccion[y], centro, 260+y*25);
+        }
+        
+
+        ctx.font = "bold 18px Calibri";
+        ctx.fillText("Check in", centro / 2, 320);
+        ctx.fillText("Check out", centro + centro / 2, 320);
+        ctx.font = "18px Calibri";
+        ctx.fillText(checkin, centro / 2, 350);
+        ctx.fillText(checkout, centro + centro / 2, 350);
+        ctx.font = "bold 18px Calibri";
+        ctx.fillText("TOTAL DE NOCHES", centro / 2, 390);
+        ctx.fillText(noches, centro + centro / 2, 390);
+
+        ctx.fillText("PRECIO POR NOCHE POR PERSONA", centro / 2, 430);
+        ctx.fillStyle = "#E97132"
+        ctx.fillText("(SIN IMPUESTOS)", centro / 2, 450);
+        ctx.fillStyle = "#002060";
+        ctx.fillText("PRECIO POR NOCHE POR PERSONA", centro / 2, 490);
+        ctx.fillStyle = "#FF0000"
+        ctx.fillText("(INCLUYE IMPUESTOS)", centro / 2, 510);
+        ctx.textAlign = "right"
+        ctx.fillStyle = "#002060";
+        ctx.fillText(precioPersona, canvas.width - 20, 440);
+        ctx.fillText(precioImpuestos, canvas.width - 20, 500);
+        ctx.fillText("NOKTOS POR NOCHE", centro, 550);
+        ctx.fillText("DESAYUNO:", centro, 590);
+        ctx.fillStyle = "#FF0000"
+        ctx.fillText("NOTA:", centro, 630);
+        ctx.textAlign = "center"
+        ctx.fillStyle = "#002060";
+        ctx.fillText(noktos, centro + centro / 2, 550);
+        ctx.fillStyle = "#FF0000"
+        for(let y = 0; y < desayuno.length; y++){
+            ctx.fillText(desayuno[y], centro + centro / 2, 590+y*25);
+        }
+        drawTextRect(0, 640, 600, 85, "", "#000000", "#f8fc03");
+        ctx.font = "bold 18px Calibri";
+        ctx.fillStyle = "#002060";
+        ctx.fillText("No aplica cambio y/o cancelaciones", centro, 660);
+        ctx.fillText("No es reembolsable", centro, 685);
+        ctx.fillText("Tarifas sujetos a cambio sin previo aviso", centro, 710);
+        ctx.textAlign = "left"
+        ctx.fillText("Quedo al pendiente de el Vo.Bo.", 10, 760);
+        ctx.fillText("Saludos.", 10, 800);
+        const img = new Image();
+        img.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCCnXXDdUwbDQkIKpIgnllhb-febE-E2isQQ&s";
+        img.onload = () => {
+            // Dibuja la imagen completa en el canvas
+            ctx.drawImage(img, 80, 60, 80, 60);
+        };
+
+        const kone = new Image();
+        kone.src = "https://cdn.worldvectorlogo.com/logos/kone-3.svg";
+        kone.onload = () => {
+            // Dibuja la imagen completa en el canvas
+            ctx.drawImage(kone, 150, 20, 110, 55);
+        };
+    }, []);
+
+
+
+    return (<canvas ref={canvasRef} width={600} height={820}/>);
+
 }
