@@ -1,16 +1,31 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { LoadMessage } from "../LoadMessage/LoadMessage.jsx";
+import { LoadMessage } from "../../components/LoadMessage/LoadMessage.jsx";
 import { IconSearch } from "../../assets/icons/icons.jsx";
-import { Message } from "../Message/Message.jsx";
-import { UserInput } from "../UserInput/UserInput.jsx";
+import { Message } from "../../components/Message/Message.jsx";
+import { UserInput } from "../../components/UserInput/UserInput.jsx";
 import { useLocalStorage } from "../../Hooks/useLocalStorage.js";
 import { useState, useEffect, useRef } from 'react'
 import { Link } from "wouter";
-import './Main.css'
+import './Prueba.css'
 
-export function Main() {
+let assistants = [
+    {
+        id: "asst_bzwg7fR39wMhTewlkd10Su4K",
+        name: "Reportes"
+    },
+    {
+        id: "asst_bzwg7fR39wMhTewlkd10Su4K",
+        name: "Cotizaciones"
+    },
+    {
+        id: "asst_QwPVn8JiHf2ZnYppN6v60Cb9",
+        name: "Cupon cotización"
+    }
+]
+
+export function Prueba() {
     const divRef = useRef(null);
-    const [assistant, ] = useState(null)
+    const [assistant, setAssistant] = useState(assistants[0].id)
     const [messages, setMessages] = useState([])
     const [inputValue, setInputValue] = useState("")
     const [inMessage, setInMessage] = useState(false)
@@ -23,38 +38,33 @@ export function Main() {
             alert('Error al copiar: ', err);
         }
     }
-
     function handleSubmitThread(e) {
         e.preventDefault();
         if (inputValue != "") fetchListMessages(inputValue)
     }
-
     const handleSubmitMessage = (message) => {
         setMessages([...messages, {
             role: "user",
             content: message
         }])
     }
-
     const scrollToBottom = () => {
         if (divRef.current) {
             divRef.current.scrollTop = divRef.current.scrollHeight;
         }
     };
-
     const handleNewChat = () => {
         remove()
         setMessages([])
     }
-
     useEffect(() => {
         if (thread_local && messages.length == 0) {
             fetchListMessages(thread_local)
         }
     }, [thread_local])
-
     async function fetchListMessages(value) {
-        await fetch("https://noktos-chatbot.uc.r.appspot.com/chat?thread_id=" + value)
+        //https://noktos-chatbot.uc.r.appspot.com
+        await fetch("http://localhost:3000/chat?thread_id=" + value)
             .then(response => {
                 return response.json()
             })
@@ -69,7 +79,7 @@ export function Main() {
             });
     }
     async function connectOpenAI() {
-        await fetch("https://noktos-chatbot.uc.r.appspot.com/chat", {
+        await fetch("http://localhost:3000/chat", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -77,7 +87,7 @@ export function Main() {
             body: JSON.stringify({
                 thread_id: thread_local,
                 content: messages[messages.length - 1].content,
-                assistantID : assistant
+                assistantID: assistant
             }),
         })
             .then(response => {
@@ -99,7 +109,6 @@ export function Main() {
                 alert("ha ocurrido un error, verifica la consola")
             });
     }
-
     useEffect(() => {
         //En la construccion del componente termina el useeffect
         if (messages.length == 0) return
@@ -121,6 +130,9 @@ export function Main() {
         console.log(messages)
 
     }, [messages])
+    const handleChangeAssistant = (assistant) => {
+        setAssistant(assistant)
+    }
 
     return (
         <main>
@@ -148,6 +160,21 @@ export function Main() {
                 <section ref={divRef} className="messages">
 
                     {
+                        messages.length == 0 &&
+                        <section className="changeAssistant">
+                            <h1>¡Bienvenido a noktos!</h1>
+                            <div>
+                                {
+                                    assistants.map(
+                                        (element) => {
+                                            return <button key={element.id} onClick={() => handleChangeAssistant(element.id)}>{element.name}</button>
+                                        })
+                                }
+                            </div>
+                        </section>
+                    }
+
+                    {
                         messages.map((element) => {
                             return <Message
                                 key={Math.random() * 9999999}
@@ -173,7 +200,7 @@ export function Main() {
                 <UserInput
                     onSubmit={handleSubmitMessage}
                     isDisabled={inMessage}
-                    isInitParent={!!thread_local}
+                    isInitParent={true} //CAMBIE ESTO
                 />
 
             </section>
