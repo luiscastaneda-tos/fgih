@@ -65,7 +65,7 @@ export function Prueba() {
     }, [thread_local])
     async function fetchListMessages(value) {
         //https://noktos-chatbot.uc.r.appspot.com
-        await fetch("http://localhost:3000/chat?thread_id=" + value)
+        await fetch("https://noktos-chatbot.uc.r.appspot.com/chat?thread_id=" + value)
             .then(response => {
                 return response.json()
             })
@@ -80,7 +80,7 @@ export function Prueba() {
             });
     }
     async function connectOpenAI() {
-        await fetch("http://localhost:3000/chat", {
+        await fetch("https://noktos-chatbot.uc.r.appspot.com/chat", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
