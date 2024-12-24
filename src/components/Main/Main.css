@@ -220,3 +220,11 @@ span.active {
     opacity: 0;
     animation: slideIn 0.3s forwards;
 }
+
+canvas{
+    transform: scale(85%);
+    margin: 0;
+    box-shadow: 0 0 10px #00000065;
+    border-radius: 8px;
+    padding-bottom: 20px;
+}
