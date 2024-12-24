@@ -25,7 +25,7 @@ let assistants = [
 
 export function Prueba() {
     const divRef = useRef(null);
-    const [assistant, setAssistant] = useState(undefined)
+    const [assistant, setAssistant] = useState(assistants[2].id)
     const [messages, setMessages] = useState([])
     const [inputValue, setInputValue] = useState("")
     const [inMessage, setInMessage] = useState(false)
@@ -131,9 +131,9 @@ export function Prueba() {
         console.log(messages)
 
     }, [messages])
-    const handleChangeAssistant = (assistant) => {
-        setAssistant(assistant)
-    }
+    // const handleChangeAssistant = (assistant) => {
+    //     setAssistant(assistant)
+    // }
 
     return (
         <main>
@@ -160,7 +160,7 @@ export function Prueba() {
             <section className="chat">
                 <section ref={divRef} className="messages">
 
-                    {
+                    {/* {
                         !assistant &&
                         <section className="changeAssistant">
                             <h1>¡Bienvenido a noktos!</h1>
@@ -173,8 +173,12 @@ export function Prueba() {
                                 }
                             </div>
                         </section>
-                    }
+                    } */}
 
+                    {
+                        messages.length == 0 &&
+                        <h1>Estas en la prueba de la creacion de imagen para cotización</h1>
+                    }
                     {
                         messages.map((element) => {
                             return <Message
