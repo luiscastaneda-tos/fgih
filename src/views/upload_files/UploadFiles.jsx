@@ -48,7 +48,7 @@ export function UploadFiles() {
     return (
         <main className="upload">
             <nav>
-                <Link href="/" >
+                <Link href="/nav" >
                     <img className="logo_main" src="https://www.app.noktos.com/img/noktos_logo.svg" />
                 </Link>
             </nav>

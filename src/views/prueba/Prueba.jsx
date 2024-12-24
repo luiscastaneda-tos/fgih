@@ -25,7 +25,7 @@ let assistants = [
 
 export function Prueba() {
     const divRef = useRef(null);
-    const [assistant, setAssistant] = useState(assistants[0].id)
+    const [assistant, setAssistant] = useState(undefined)
     const [messages, setMessages] = useState([])
     const [inputValue, setInputValue] = useState("")
     const [inMessage, setInMessage] = useState(false)
@@ -56,6 +56,7 @@ export function Prueba() {
     const handleNewChat = () => {
         remove()
         setMessages([])
+        setAssistant(undefined)
     }
     useEffect(() => {
         if (thread_local && messages.length == 0) {
@@ -137,7 +138,7 @@ export function Prueba() {
     return (
         <main>
             <nav>
-                <Link href="/upload" >
+                <Link href="/nav" >
                     <img className="logo_main" src="https://www.app.noktos.com/img/noktos_logo.svg" alt="" />
                 </Link>
 
@@ -160,7 +161,7 @@ export function Prueba() {
                 <section ref={divRef} className="messages">
 
                     {
-                        messages.length == 0 &&
+                        !assistant &&
                         <section className="changeAssistant">
                             <h1>¡Bienvenido a noktos!</h1>
                             <div>

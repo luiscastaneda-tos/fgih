@@ -10,7 +10,7 @@ import './Main.css'
 
 export function Main() {
     const divRef = useRef(null);
-    const [assistant, ] = useState("asst_QwPVn8JiHf2ZnYppN6v60Cb9");
+    const [assistant, ] = useState("asst_bzwg7fR39wMhTewlkd10Su4K");
     const [messages, setMessages] = useState([])
     const [inputValue, setInputValue] = useState("")
     const [inMessage, setInMessage] = useState(false)
@@ -125,7 +125,7 @@ export function Main() {
     return (
         <main>
             <nav>
-                <Link href="/upload" >
+                <Link href="/nav" >
                     <img className="logo_main" src="https://www.app.noktos.com/img/noktos_logo.svg" alt="" />
                 </Link>
 
