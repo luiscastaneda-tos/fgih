@@ -1,4 +1,4 @@
-import { text } from "framer-motion/client"
+import { div, text } from "framer-motion/client"
 import { useEffect } from "react"
 import { useRef } from "react"
 
@@ -23,7 +23,7 @@ export function UseComponents(message) {
         if (element == "") {
             return <></>
         }
-        if (element.includes('!!{"cupon":')) {
+        if (element.includes('{"cupon":')) {
             return ImagenCupon(element);
         }
         else {
@@ -211,9 +211,19 @@ function Table(element, index, array) {
 function separarTexto(texto, limite){
     const textoSeparado = texto.split(" ");
     const almacenarTextoSeparado = [];
+    const inicial = 0;
     if(textoSeparado.length > limite){
-        almacenarTextoSeparado.push(textoSeparado.slice(0,limite).join(" "));
-        almacenarTextoSeparado.push(textoSeparado.slice(limite,textoSeparado.length).join(" "));
+        const splitsOptimos = Math.round(textoSeparado.length/limite);
+        console.log(splitsOptimos);
+        for(let i = 0;i< splitsOptimos;i++){
+            if(i+1 == splitsOptimos){
+                almacenarTextoSeparado.push(textoSeparado.slice(limite*i,textoSeparado.length).join(" "));
+            }
+            else{
+                almacenarTextoSeparado.push(textoSeparado.slice(limite*i,limite*(i+1)).join(" "));
+            }
+            
+        }
         return almacenarTextoSeparado;
     }
     return [textoSeparado.join(" ")];
@@ -223,15 +233,14 @@ function ImagenCupon(element) {
     const parseado = JSON.parse(element.replaceAll("!", ""));
     const objetoCupon = parseado.cupon;
     const hotel = objetoCupon.hotel;
-    const direccion = separarTexto(objetoCupon.direccion,9);
+    const direccion = separarTexto(objetoCupon.direccion,5);
     const checkin = objetoCupon.checkin;
     const checkout = objetoCupon.checkout;
     const noches = objetoCupon.noches;
     const noktos = objetoCupon.noktos;
-    const precioPersona = objetoCupon.precio;   
-    const precioImpuestos = objetoCupon.impuestos;
-    const desayuno = separarTexto(objetoCupon.notas,4);
-    
+    const precioPersona = objetoCupon.precio.toFixed(2);   
+    const precioImpuestos = objetoCupon.impuestos.toFixed(2);
+    const nota = separarTexto(String(objetoCupon.notas)+' '+String(objetoCupon.desayuno),5);
 
     const canvasRef = useRef(null);
     useEffect(() => {
@@ -249,6 +258,84 @@ function ImagenCupon(element) {
             ctx.fillText(text, x + width / 2, y + height / 2 + 5);
         }
 
+        // Fondo blanco
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        const centro = canvas.width/2;
+        // Títulos principales
+        ctx.font = "bold 20px Calibri";
+        ctx.textAlign = "center"
+        ctx.fillStyle = "#002060";
+        ctx.fillText("KONE México SA DE CV", centro+centro/2, 40);
+        ctx.fillText("Cotización - Host", centro+centro/2, 60);
+
+        //drawTextRect(0, 90, centro, 70, "", "#000000", "#002060");
+        ctx.font = "20px Calibri";
+        //ctx.fillStyle = "#FFF";
+        ctx.fillText("HOTEL", centro/2, 130);
+        ctx.fillStyle = "#002060";
+        ctx.fillText(hotel,centro+centro/2,130)
+        ctx.fillStyle = "#002060";
+        ctx.fillText("Periodo de estancia", centro/2, 280);
+        ctx.font = "20px Calibri";
+        ctx.fillText(checkin+" - "+checkout,centro+centro/2,280);
+        
+        ctx.fillText("Precio por noche por persona", centro/2, 320);
+        ctx.fillStyle = "#FF0000"
+        ctx.fillText("(sin impuestos)", centro/2, 340);
+        ctx.fillText("$ "+precioPersona, centro+centro/2, 320);
+        ctx.fillStyle = "#002060";
+        ctx.fillText("Precio por noche por persona", centro/2, 380);
+        ctx.fillText("(incluye impuestos)", centro/2, 400);
+        ctx.fillText("$ "+precioImpuestos, centro+centro/2, 380);
+        ctx.fillText("Noktos por noche", centro/2, 450);
+        ctx.fillText(noktos, centro+centro/2, 450);
+        ctx.font = "20px Calibri";
+        ctx.fillStyle = "#002060";
+        ctx.fillText("Dirección:", centro/2, 210);
+        ctx.fillStyle = "#FF0000";
+        for(let y = 0; y < direccion.length; y++){
+            ctx.fillText(direccion[y], centro+centro/2, 190+y*25);
+        }
+        ctx.fillText("Nota:", centro/2, 510);
+        const alerta = new Image();
+        alerta.src="https://img.freepik.com/vector-premium/sirena-alarma_592324-17380.jpg?w=740";
+        alerta.onload = () => {
+            // Dibuja la imagen completa en el canvas
+            ctx.drawImage(alerta, 75, 460, 70,70);
+        };
+        ctx.textAlign = "center"
+        ctx.fillStyle = "#002060";
+        for(let y = 0; y < nota.length; y++){
+            ctx.fillText(nota[y], centro+centro/2, 510+y*25);
+        }
+
+        ctx.textAlign = "center"
+        drawTextRect(0, 580, canvas.width, 85, "", "#000000", "#f8fc03");
+        
+        ctx.font = "bold 20px Calibri";
+        ctx.fillStyle = "#002060";
+        ctx.fillText("No aplica cambio y/o cancelaciones", centro, 600);
+        ctx.fillText("No es reembolsable", centro, 625);
+        ctx.fillText("Tarifas sujetos a cambio sin previo aviso", centro, 650);
+        ctx.textAlign = "left"
+        ctx.fillText("Quedo al pendiente del Vo.Bo.", 10, 690);
+        ctx.fillText("Saludos,", 10, 720);
+        ctx.fillText("Noktos", 10, 750);
+        const img = new Image();
+        img.src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCCnXXDdUwbDQkIKpIgnllhb-febE-E2isQQ&s";
+        img.onload = () => {
+            // Dibuja la imagen completa en el canvas
+            ctx.drawImage(img, 20, 18, 80,60);
+        };
+
+        const kone = new Image();
+        kone.src="https://cdn.worldvectorlogo.com/logos/kone-3.svg";
+        kone.onload = () => {
+            // Dibuja la imagen completa en el canvas
+            ctx.drawImage(kone, 150, 20, 110,55);
+        };
+        /*
         // Fondo blanco
         ctx.fillStyle = "#FFFFFF";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -327,11 +414,17 @@ function ImagenCupon(element) {
         kone.onload = () => {
             // Dibuja la imagen completa en el canvas
             ctx.drawImage(kone, 150, 20, 110, 55);
-        };
+        };*/
     }, []);
 
 
 
-    return (<canvas ref={canvasRef} width={600} height={820}/>);
+    return (
+        <div>
+            <h2>{hotel}</h2>
+            <canvas ref={canvasRef} width={700} height={750}/>
+            <hr />
+        </div>
+);
 
 }
