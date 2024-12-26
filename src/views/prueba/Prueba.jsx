@@ -25,7 +25,7 @@ let assistants = [
 
 export function Prueba() {
     const divRef = useRef(null);
-    const [assistant, setAssistant] = useState(assistants[2].id)
+    const [assistant, ] = useState(assistants[2].id)
     const [messages, setMessages] = useState([])
     const [inputValue, setInputValue] = useState("")
     const [inMessage, setInMessage] = useState(false)
@@ -56,7 +56,6 @@ export function Prueba() {
     const handleNewChat = () => {
         remove()
         setMessages([])
-        setAssistant(undefined)
     }
     useEffect(() => {
         if (thread_local && messages.length == 0) {
