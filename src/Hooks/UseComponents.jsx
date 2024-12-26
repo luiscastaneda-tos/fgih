@@ -280,12 +280,12 @@ function ImagenCupon(element) {
         ctx.font = "20px Calibri";
         ctx.fillText(checkin+" - "+checkout,centro+centro/2,280);
         
-        ctx.fillText("Precio por noche por persona", centro/2, 320);
+        ctx.fillText("Precio por noche por habitación", centro/2, 320);
         ctx.fillStyle = "#FF0000"
         ctx.fillText("(sin impuestos)", centro/2, 340);
         ctx.fillText("$ "+precioPersona, centro+centro/2, 320);
         ctx.fillStyle = "#002060";
-        ctx.fillText("Precio por noche por persona", centro/2, 380);
+        ctx.fillText("Precio por noche por habitación", centro/2, 380);
         ctx.fillText("(incluye impuestos)", centro/2, 400);
         ctx.fillText("$ "+precioImpuestos, centro+centro/2, 380);
         ctx.fillText("Noktos por noche", centro/2, 450);
@@ -293,7 +293,6 @@ function ImagenCupon(element) {
         ctx.font = "20px Calibri";
         ctx.fillStyle = "#002060";
         ctx.fillText("Dirección:", centro/2, 210);
-        ctx.fillStyle = "#FF0000";
         for(let y = 0; y < direccion.length; y++){
             ctx.fillText(direccion[y], centro+centro/2, 190+y*25);
         }
@@ -315,9 +314,9 @@ function ImagenCupon(element) {
         
         ctx.font = "bold 20px Calibri";
         ctx.fillStyle = "#002060";
-        ctx.fillText("No aplica cambio y/o cancelaciones", centro, 600);
-        ctx.fillText("No es reembolsable", centro, 625);
-        ctx.fillText("Tarifas sujetos a cambio sin previo aviso", centro, 650);
+        //ctx.fillText("No aplica cambio y/o cancelaciones", centro, 600);
+        ctx.fillText("Tarifa no reembolsable (No aplica cambio y/o cancelaciones)", centro, 615);
+        ctx.fillText("Tarifa sujeto disponibilidad", centro, 645);
         ctx.textAlign = "left"
         ctx.fillText("Quedo al pendiente del Vo.Bo.", 10, 690);
         ctx.fillText("Saludos,", 10, 720);
