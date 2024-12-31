@@ -1,7 +1,7 @@
 import { Link } from "wouter";
-import './ButtonNav.css'
+import './BarNav.css'
 
-export function ButtonNav() {
+export function BarNav() {
     return (
         <section id="navegacion">
             <nav>

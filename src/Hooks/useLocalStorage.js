@@ -1,11 +1,9 @@
 import { useState } from 'react';
 
 // Hook para gestionar localStorage con una clave fija
-export function useLocalStorage() {
-    const KEY = 'thread_id';  // Clave fija para el localStorage
-
+export function useLocalStorage( key = "thread_id" ) {
     // Recuperamos el valor desde localStorage al montar el componente
-    const storedValue = localStorage.getItem(KEY);
+    const storedValue = localStorage.getItem(key);
 
     // Estado para manejar el valor
     const [thread_local, setThread_local] = useState(storedValue ? JSON.parse(storedValue) : null);
@@ -13,13 +11,13 @@ export function useLocalStorage() {
     // Función para guardar un valor en localStorage y actualizar el estado
     const saveToLocalStorage = (newValue) => {
         setThread_local(newValue); // Actualiza el estado
-        localStorage.setItem(KEY, JSON.stringify(newValue)); // Guarda en localStorage
+        localStorage.setItem(key, JSON.stringify(newValue)); // Guarda en localStorage
     };
 
     // Función para eliminar el valor del localStorage y actualizar el estado
     const removeFromLocalStorage = () => {
         setThread_local(null); // Actualiza el estado
-        localStorage.removeItem(KEY); // Elimina del localStorage
+        localStorage.removeItem(key); // Elimina del localStorage
     };
 
     return {
@@ -31,11 +29,11 @@ export function useLocalStorage() {
 
 // Hook para gestionar localStorage con una lista de valores y un índice
 export function useLocalStorageList() {
-    const KEY = 'thread_id';  // Clave fija para el localStorage
+    const key = 'thread_id';  // Clave fija para el localStorage
     const INDEX_KEY = 'thread_index';  // Clave para el índice del último valor agregado
 
     // Recuperamos el valor desde localStorage al montar el componente
-    const storedValues = localStorage.getItem(KEY);
+    const storedValues = localStorage.getItem(key);
     const storedIndex = localStorage.getItem(INDEX_KEY);
 
     // Si no hay valores en localStorage, inicializamos un array vacío y el índice en 0
@@ -55,7 +53,7 @@ export function useLocalStorageList() {
         setCurrentIndex(newIndex);     // Actualiza el índice
 
         // Guarda la lista de valores y el índice en localStorage
-        localStorage.setItem(KEY, JSON.stringify(updatedList));
+        localStorage.setItem(key, JSON.stringify(updatedList));
         localStorage.setItem(INDEX_KEY, newIndex.toString());
     };
 
@@ -71,7 +69,7 @@ export function useLocalStorageList() {
 
         setThread_local(updatedList);  // Actualiza el estado
         // No cambiamos el índice, ya que no es un nuevo valor
-        localStorage.setItem(KEY, JSON.stringify(updatedList));  // Guarda la lista actualizada en localStorage
+        localStorage.setItem(key, JSON.stringify(updatedList));  // Guarda la lista actualizada en localStorage
     };
 
     // Función para eliminar un valor de la lista en localStorage por su índice
@@ -83,7 +81,7 @@ export function useLocalStorageList() {
         setCurrentIndex(newIndex);     // Actualiza el índice
 
         // Guarda la lista actualizada y el índice en localStorage
-        localStorage.setItem(KEY, JSON.stringify(updatedList));
+        localStorage.setItem(key, JSON.stringify(updatedList));
         localStorage.setItem(INDEX_KEY, newIndex.toString());
     };
 

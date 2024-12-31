@@ -233,14 +233,14 @@ function ImagenCupon(element) {
     const parseado = JSON.parse(element.replaceAll("!", ""));
     const objetoCupon = parseado.cupon;
     const hotel = objetoCupon.hotel;
-    const direccion = separarTexto(objetoCupon.direccion,5);
+    const direccion = separarTexto(objetoCupon.direccion,10);
     const checkin = objetoCupon.checkin;
     const checkout = objetoCupon.checkout;
     const noches = objetoCupon.noches;
     const noktos = objetoCupon.noktos;
     const precioPersona = objetoCupon.precio.toFixed(2);   
     const precioImpuestos = objetoCupon.impuestos.toFixed(2);
-    const nota = separarTexto(String(objetoCupon.notas)+' '+String(objetoCupon.desayuno),5);
+    const nota = separarTexto(String(objetoCupon.notas)+' '+String(objetoCupon.desayuno),10);
 
     const canvasRef = useRef(null);
     useEffect(() => {
@@ -271,53 +271,65 @@ function ImagenCupon(element) {
 
         //drawTextRect(0, 90, centro, 70, "", "#000000", "#002060");
         ctx.font = "20px Calibri";
-        //ctx.fillStyle = "#FFF";
-        ctx.fillText("HOTEL", centro/2, 130);
+        ctx.textAlign = "left"
+        ctx.fillStyle = "#FF0000";
+        ctx.fillText("Nota:", 20, 570);
+        ctx.fillStyle = "#000000";
+        ctx.fillText("HOTEL", 20, 130);
+        ctx.fillText("Dirección", 20, 190);
         ctx.fillStyle = "#002060";
-        ctx.fillText(hotel,centro+centro/2,130)
-        ctx.fillStyle = "#002060";
-        ctx.fillText("Periodo de estancia", centro/2, 280);
-        ctx.font = "20px Calibri";
-        ctx.fillText(checkin+" - "+checkout,centro+centro/2,280);
-        
-        ctx.fillText("Precio por noche por habitación", centro/2, 320);
-        ctx.fillStyle = "#FF0000"
-        ctx.fillText("(sin impuestos)", centro/2, 340);
-        ctx.fillText("$ "+precioPersona, centro+centro/2, 320);
-        ctx.fillStyle = "#002060";
-        ctx.fillText("Precio por noche por habitación", centro/2, 380);
-        ctx.fillText("(incluye impuestos)", centro/2, 400);
-        ctx.fillText("$ "+precioImpuestos, centro+centro/2, 380);
-        ctx.fillText("Noktos por noche", centro/2, 450);
-        ctx.fillText(noktos, centro+centro/2, 450);
-        ctx.font = "20px Calibri";
-        ctx.fillStyle = "#002060";
-        ctx.fillText("Dirección:", centro/2, 210);
-        for(let y = 0; y < direccion.length; y++){
-            ctx.fillText(direccion[y], centro+centro/2, 190+y*25);
-        }
-        ctx.fillText("Nota:", centro/2, 510);
-        const alerta = new Image();
-        alerta.src="https://img.freepik.com/vector-premium/sirena-alarma_592324-17380.jpg?w=740";
-        alerta.onload = () => {
-            // Dibuja la imagen completa en el canvas
-            ctx.drawImage(alerta, 75, 460, 70,70);
-        };
         ctx.textAlign = "center"
+        ctx.fillText(hotel,centro,160);
+        for(let y = 0; y < direccion.length; y++){
+            ctx.fillText(direccion[y], centro, 220+y*25);
+        }
+        ctx.fillStyle = "#000000";
+        ctx.font = "bold 20px Calibri";
+        ctx.fillText("Check in", centro/2, 280);
+        ctx.fillText("Check out", centro+centro/2, 280);
+        ctx.font = "20px Calibri";
+        ctx.fillText(checkin,centro/2,310);
+        ctx.fillText(checkout,centro+centro/2,310);
+        //ctx.fillText(checkin+" - "+checkout,centro+centro/2,280);
+        ctx.fillText(`Total de noches: ${noches}`, centro, 350);
+        ctx.textAlign = "right"
+        ctx.fillText("Precio por noche por habitación", centro, 390);
+        ctx.fillText("Precio por noche por habitación", centro, 450);
+        ctx.fillText("Noktos por noche", centro, 510);
+        ctx.fillText(noktos, centro+20, 510);
+        
+        ctx.fillStyle = "#002060";
+        ctx.fillText("(sin impuestos)", centro, 410);
+        ctx.fillText("(incluye impuestos)", centro, 470);
+        
+        ctx.textAlign = "left"
+        ctx.font = "bold 20px Calibri";
+        ctx.fillText("$ "+precioPersona, centro+20, 410);
+        ctx.fillText("$ "+precioImpuestos, centro+20, 470);
+        ctx.font = "20px Calibri";
+        
+        // const alerta = new Image();
+        // alerta.src="https://img.freepik.com/vector-premium/sirena-alarma_592324-17380.jpg?w=740";
+        // alerta.onload = () => {
+        //     // Dibuja la imagen completa en el canvas
+        //     ctx.drawImage(alerta, 75, 460, 70,70);
+        // };
+        ctx.textAlign = "left"
         ctx.fillStyle = "#002060";
         for(let y = 0; y < nota.length; y++){
-            ctx.fillText(nota[y], centro+centro/2, 510+y*25);
+            ctx.fillText(nota[y], 70, 570+y*25);
         }
 
         ctx.textAlign = "center"
-        drawTextRect(0, 580, canvas.width, 85, "", "#000000", "#f8fc03");
+        drawTextRect(0, 580, canvas.width, 85, "", "#000000", "#ffffff");
         
         ctx.font = "bold 20px Calibri";
-        ctx.fillStyle = "#002060";
+        ctx.fillStyle = "#06304b";
         //ctx.fillText("No aplica cambio y/o cancelaciones", centro, 600);
         ctx.fillText("Tarifa no reembolsable (No aplica cambio y/o cancelaciones)", centro, 615);
         ctx.fillText("Tarifa sujeto disponibilidad", centro, 645);
         ctx.textAlign = "left"
+        ctx.fillStyle = "#000000";
         ctx.fillText("Quedo al pendiente del Vo.Bo.", 10, 690);
         ctx.fillText("Saludos,", 10, 720);
         ctx.fillText("Noktos", 10, 750);
@@ -381,13 +393,13 @@ function ImagenCupon(element) {
         ctx.fillStyle = "#002060";
         ctx.fillText(precioPersona, canvas.width - 20, 440);
         ctx.fillText(precioImpuestos, canvas.width - 20, 500);
-        ctx.fillText("NOKTOS POR NOCHE", centro, 550);
+        ctx.fillText("NOKTOS POR NOCHE", centro, 570);
         ctx.fillText("DESAYUNO:", centro, 590);
         ctx.fillStyle = "#FF0000"
         ctx.fillText("NOTA:", centro, 630);
         ctx.textAlign = "center"
         ctx.fillStyle = "#002060";
-        ctx.fillText(noktos, centro + centro / 2, 550);
+        ctx.fillText(noktos, centro + centro / 2, 570);
         ctx.fillStyle = "#FF0000"
         for(let y = 0; y < desayuno.length; y++){
             ctx.fillText(desayuno[y], centro + centro / 2, 590+y*25);
