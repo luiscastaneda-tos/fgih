@@ -269,12 +269,12 @@ function ImagenCupon(element) {
         ctx.fillText("KONE México SA DE CV", centro+centro/2, 40);
         ctx.fillText("Cotización - Host", centro+centro/2, 60);
 
-        //drawTextRect(0, 90, centro, 70, "", "#000000", "#002060");
+        //drawTextRect(0, 90, centro, 70, "", "#002060", "#002060");
         ctx.font = "20px Calibri";
         ctx.textAlign = "left"
         ctx.fillStyle = "#FF0000";
         ctx.fillText("Nota:", 20, 570);
-        ctx.fillStyle = "#000000";
+        ctx.fillStyle = "#002060";
         ctx.fillText("HOTEL", 20, 130);
         ctx.fillText("Dirección", 20, 190);
         ctx.fillStyle = "#002060";
@@ -283,7 +283,7 @@ function ImagenCupon(element) {
         for(let y = 0; y < direccion.length; y++){
             ctx.fillText(direccion[y], centro, 220+y*25);
         }
-        ctx.fillStyle = "#000000";
+        ctx.fillStyle = "#002060";
         ctx.font = "bold 20px Calibri";
         ctx.fillText("Check in", centro/2, 280);
         ctx.fillText("Check out", centro+centro/2, 280);
@@ -321,7 +321,7 @@ function ImagenCupon(element) {
         }
 
         ctx.textAlign = "center"
-        drawTextRect(0, 580, canvas.width, 85, "", "#000000", "#ffffff");
+        drawTextRect(0, 580, canvas.width, 85, "", "#002060", "#ffffff");
         
         ctx.font = "bold 20px Calibri";
         ctx.fillStyle = "#06304b";
@@ -329,7 +329,7 @@ function ImagenCupon(element) {
         ctx.fillText("Tarifa no reembolsable (No aplica cambio y/o cancelaciones)", centro, 615);
         ctx.fillText("Tarifa sujeto disponibilidad", centro, 645);
         ctx.textAlign = "left"
-        ctx.fillStyle = "#000000";
+        ctx.fillStyle = "#002060";
         ctx.fillText("Quedo al pendiente del Vo.Bo.", 10, 690);
         ctx.fillText("Saludos,", 10, 720);
         ctx.fillText("Noktos", 10, 750);
@@ -404,7 +404,7 @@ function ImagenCupon(element) {
         for(let y = 0; y < desayuno.length; y++){
             ctx.fillText(desayuno[y], centro + centro / 2, 590+y*25);
         }
-        drawTextRect(0, 640, 600, 85, "", "#000000", "#f8fc03");
+        drawTextRect(0, 640, 600, 85, "", "#002060", "#f8fc03");
         ctx.font = "bold 18px Calibri";
         ctx.fillStyle = "#002060";
         ctx.fillText("No aplica cambio y/o cancelaciones", centro, 660);
