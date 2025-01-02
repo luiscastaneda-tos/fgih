@@ -214,7 +214,6 @@ function separarTexto(texto, limite){
     const inicial = 0;
     if(textoSeparado.length > limite){
         const splitsOptimos = Math.round(textoSeparado.length/limite);
-        console.log(splitsOptimos);
         for(let i = 0;i< splitsOptimos;i++){
             if(i+1 == splitsOptimos){
                 almacenarTextoSeparado.push(textoSeparado.slice(limite*i,textoSeparado.length).join(" "));
@@ -229,18 +228,25 @@ function separarTexto(texto, limite){
     return [textoSeparado.join(" ")];
 }
 
+function acomodarNumero(numero) {
+    let stringNumber = numero.toFixed(2).split("")
+    let index = stringNumber.indexOf(".")
+    if(index < 4 ){
+        return stringNumber.join("")
+    } else {
+        stringNumber.splice(index-3,0,",")
+        return stringNumber.join("")
+    }
+}
+
 function ImagenCupon(element) {
     const parseado = JSON.parse(element.replaceAll("!", ""));
     const objetoCupon = parseado.cupon;
-    const hotel = objetoCupon.hotel;
+    const { hotel, checkin, checkout, noches, noktos, desayuno, notas, precio, impuestos} = objetoCupon;
     const direccion = separarTexto(objetoCupon.direccion,10);
-    const checkin = objetoCupon.checkin;
-    const checkout = objetoCupon.checkout;
-    const noches = objetoCupon.noches;
-    const noktos = objetoCupon.noktos;
-    const precioPersona = objetoCupon.precio.toFixed(2);   
-    const precioImpuestos = objetoCupon.impuestos.toFixed(2);
-    const nota = separarTexto(String(objetoCupon.notas)+' '+String(objetoCupon.desayuno),10);
+    const precioPersona = acomodarNumero(precio); 
+    const precioImpuestos = acomodarNumero(impuestos);
+    const nota = separarTexto(String(notas)+' '+String(desayuno),10);
 
     const canvasRef = useRef(null);
     useEffect(() => {
@@ -295,9 +301,10 @@ function ImagenCupon(element) {
         ctx.textAlign = "right"
         ctx.fillText("Precio por noche por habitación", centro, 390);
         ctx.fillText("Precio por noche por habitación", centro, 450);
-        ctx.fillText("Noktos por noche", centro, 510);
-        ctx.fillText(noktos, centro+20, 510);
+        ctx.textAlign = "center"
+        ctx.fillText(`Noktos por noche: ${noktos}`, centro, 510);
         
+        ctx.textAlign = "right"
         ctx.fillStyle = "#002060";
         ctx.fillText("(sin impuestos)", centro, 410);
         ctx.fillText("(incluye impuestos)", centro, 470);
