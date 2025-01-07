@@ -4,19 +4,23 @@ import { Link } from "wouter";
 import * as XLSX from "xlsx"
 import "./UploadFiles.css";
 
-const passwordLoggin = "123456789000"
-const URL = "http://localhost:3000/upload"
+const passwordLoggin = "1234567890"
+const URL = "https://noktos-chatbot.uc.r.appspot.com/upload"
 
 const sendData = async (data, callback) => {
-    const res = await fetch(URL, {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json; charset=utf-8',
-        },
-        body: JSON.stringify(data)
-    })
-    const json = await res.json()
-    callback(json)
+    try {
+        const res = await fetch(URL, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+            },
+            body: JSON.stringify(data)
+        })
+        const json = await res.json()
+        callback(json)
+    } catch (error) {
+        alert(error)
+    }
 }
 
 export function UploadFiles() {
@@ -64,8 +68,15 @@ export function UploadFiles() {
         const data_file_filter = file.filter((item) => !!item.NoEmpleado == true && item.NoEmpleado != "N/A")
         data_file_filter.sort((a, b) => a.NoEmpleado - b.NoEmpleado)
         const data = data_file_filter.filter((item, index) => item.NoEmpleado != data_file_filter[index + 1]?.NoEmpleado)
+        const not_null = data.map(element => {
+            if (!isNaN(element.user_id)) {
+                return element
+            } else {
+                return { ...element, user_id: null }
+            }
+        })
 
-        sendData(data, (json) => {
+        sendData(not_null, (json) => {
             console.log(json)
         })
 
