@@ -1,79 +1,70 @@
 .loader {
-    position: relative;
-    height: 200px;
-    width: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px;
+  position: relative;
+  height: 200px;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
 }
 
-
-/* #texto {
-    stroke: #00c2ff;
-    fill: transparent;
-    stroke-width: 0.5%;
-    stroke-dasharray: 600;
-    animation: fillNoktos 2.6s ease-in-out infinite;
-} */
-
 #circulo {
-    stroke: #00c2ff;
-    fill: transparent;
-    stroke-width: 0.5%;
-    stroke-dasharray: 600;
-    animation: fillCirculo 4s ease-in-out infinite;
+  stroke: #00c2ff;
+  fill: transparent;
+  stroke-width: 0.5%;
+  stroke-dasharray: 600;
+  animation: fillCirculo 4s ease-in-out infinite;
 }
 
 #luna {
-    stroke: #FFFFFF;
-    fill: transparent;
-    stroke-width: 0.5%;
-    stroke-dasharray: 600;
-    animation: fillLuna 2s ease-in-out infinite;
+  stroke: #FFFFFF;
+  fill: transparent;
+  stroke-width: 0.5%;
+  stroke-dasharray: 600;
+  animation: fillLuna 2s ease-in-out infinite;
 }
 
 @keyframes fillLuna {
 
-    0% {
-        stroke-dashoffset: 0;
-        fill: #FFFFFF;
-    }
+  0% {
+    stroke-dashoffset: 0;
+    fill: #FFFFFF;
+  }
 
-    70% {
-        stroke-dashoffset: 600;
-        fill: transparent;
-    }
+  70% {
+    stroke-dashoffset: 600;
+    fill: transparent;
+  }
 
-    100% {
-        stroke-dashoffset: 0;
-        fill: #FFFFFF;
-    }
+  100% {
+    stroke-dashoffset: 0;
+    fill: #FFFFFF;
+  }
 }
 
 @keyframes fillCirculo {
-    0% {
-        stroke-dashoffset: 600;
-        fill: transparent;
-    }
+  0% {
+    stroke-dashoffset: 600;
+    fill: transparent;
+  }
 
-    25% {
-        fill: transparent;
-        stroke-dashoffset: 0;
-    }
+  25% {
+    fill: transparent;
+    stroke-dashoffset: 0;
+  }
 
-    50% {
-        stroke-dashoffset: 0;
-        fill: #00c2ff;
-    }
+  50% {
+    stroke-dashoffset: 0;
+    fill: #00c2ff;
+  }
 
-    75% {
-        fill: transparent;
-        stroke-dashoffset: 0;
-    }
+  75% {
+    fill: transparent;
+    stroke-dashoffset: 0;
+  }
 
-    100% {
-        stroke-dashoffset: 600;
-        fill: transparent;
-    }
+  100% {
+    stroke-dashoffset: 600;
+    fill: transparent;
+  }
 }

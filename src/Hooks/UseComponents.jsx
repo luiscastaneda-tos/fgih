@@ -1,4 +1,4 @@
-import { div, text } from "framer-motion/client"
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react"
 import { useRef } from "react"
 
@@ -25,6 +25,9 @@ export function UseComponents(message) {
         }
         if (element.includes('{"cupon":')) {
             return ImagenCupon(element);
+        }
+        if (element.includes('{"dataCupon":')) {
+            return ImagenCuponAerolinea(element);
         }
         else {
             return <p key={Math.random() * 123456789}>{handleBoldText(element)}</p>
@@ -56,7 +59,6 @@ function getCode(list) {
                 }
                 break;
             case "q2":
-                //Estado de finalizacion
                 break;
             default:
                 break;
@@ -208,20 +210,19 @@ function Table(element, index, array) {
     )
 }
 
-function separarTexto(texto, limite){
+function separarTexto(texto, limite) {
     const textoSeparado = texto.split(" ");
     const almacenarTextoSeparado = [];
-    const inicial = 0;
-    if(textoSeparado.length > limite){
-        const splitsOptimos = Math.round(textoSeparado.length/limite);
-        for(let i = 0;i< splitsOptimos;i++){
-            if(i+1 == splitsOptimos){
-                almacenarTextoSeparado.push(textoSeparado.slice(limite*i,textoSeparado.length).join(" "));
+    if (textoSeparado.length > limite) {
+        const splitsOptimos = Math.round(textoSeparado.length / limite);
+        for (let i = 0; i < splitsOptimos; i++) {
+            if (i + 1 == splitsOptimos) {
+                almacenarTextoSeparado.push(textoSeparado.slice(limite * i, textoSeparado.length).join(" "));
             }
-            else{
-                almacenarTextoSeparado.push(textoSeparado.slice(limite*i,limite*(i+1)).join(" "));
+            else {
+                almacenarTextoSeparado.push(textoSeparado.slice(limite * i, limite * (i + 1)).join(" "));
             }
-            
+
         }
         return almacenarTextoSeparado;
     }
@@ -231,10 +232,10 @@ function separarTexto(texto, limite){
 function acomodarNumero(numero) {
     let stringNumber = numero.toFixed(2).split("")
     let index = stringNumber.indexOf(".")
-    if(index < 4 ){
+    if (index < 4) {
         return stringNumber.join("")
     } else {
-        stringNumber.splice(index-3,0,",")
+        stringNumber.splice(index - 3, 0, ",")
         return stringNumber.join("")
     }
 }
@@ -242,11 +243,11 @@ function acomodarNumero(numero) {
 function ImagenCupon(element) {
     const parseado = JSON.parse(element.replaceAll("!", ""));
     const objetoCupon = parseado.cupon;
-    const { hotel, checkin, checkout, noches, noktos, desayuno, notas, precio, impuestos} = objetoCupon;
-    const direccion = separarTexto(objetoCupon.direccion,10);
-    const precioPersona = acomodarNumero(precio); 
+    const { hotel, checkin, checkout, noches, noktos, desayuno, notas, precio, impuestos } = objetoCupon;
+    const direccion = separarTexto(objetoCupon.direccion, 10);
+    const precioPersona = acomodarNumero(precio);
     const precioImpuestos = acomodarNumero(impuestos);
-    const nota = separarTexto(String(notas)+' '+String(desayuno),10);
+    const nota = separarTexto(String(notas) + ' ' + String(desayuno), 10);
 
     const canvasRef = useRef(null);
     useEffect(() => {
@@ -264,18 +265,15 @@ function ImagenCupon(element) {
             ctx.fillText(text, x + width / 2, y + height / 2 + 5);
         }
 
-        // Fondo blanco
         ctx.fillStyle = "#FFFFFF";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        const centro = canvas.width/2;
-        // Títulos principales
+        const centro = canvas.width / 2;
         ctx.font = "bold 20px Calibri";
         ctx.textAlign = "center"
         ctx.fillStyle = "#002060";
-        ctx.fillText("KONE México SA DE CV", centro+centro/2, 40);
-        ctx.fillText("Cotización - Host", centro+centro/2, 60);
+        ctx.fillText("KONE México SA DE CV", centro + centro / 2, 40);
+        ctx.fillText("Cotización - Host", centro + centro / 2, 60);
 
-        //drawTextRect(0, 90, centro, 70, "", "#002060", "#002060");
         ctx.font = "20px Calibri";
         ctx.textAlign = "left"
         ctx.fillStyle = "#FF0000";
@@ -285,54 +283,45 @@ function ImagenCupon(element) {
         ctx.fillText("Dirección", 20, 190);
         ctx.fillStyle = "#002060";
         ctx.textAlign = "center"
-        ctx.fillText(hotel,centro,160);
-        for(let y = 0; y < direccion.length; y++){
-            ctx.fillText(direccion[y], centro, 220+y*25);
+        ctx.fillText(hotel, centro, 160);
+        for (let y = 0; y < direccion.length; y++) {
+            ctx.fillText(direccion[y], centro, 220 + y * 25);
         }
         ctx.fillStyle = "#002060";
         ctx.font = "bold 20px Calibri";
-        ctx.fillText("Check in", centro/2, 280);
-        ctx.fillText("Check out", centro+centro/2, 280);
+        ctx.fillText("Check in", centro / 2, 280);
+        ctx.fillText("Check out", centro + centro / 2, 280);
         ctx.font = "20px Calibri";
-        ctx.fillText(checkin,centro/2,310);
-        ctx.fillText(checkout,centro+centro/2,310);
-        //ctx.fillText(checkin+" - "+checkout,centro+centro/2,280);
+        ctx.fillText(checkin, centro / 2, 310);
+        ctx.fillText(checkout, centro + centro / 2, 310);
         ctx.fillText(`Total de noches: ${noches}`, centro, 350);
         ctx.textAlign = "right"
         ctx.fillText("Precio por noche por habitación", centro, 390);
         ctx.fillText("Precio por noche por habitación", centro, 450);
         ctx.textAlign = "center"
         ctx.fillText(`Noktos por noche: ${noktos}`, centro, 510);
-        
+
         ctx.textAlign = "right"
         ctx.fillStyle = "#002060";
         ctx.fillText("(sin impuestos)", centro, 410);
         ctx.fillText("(incluye impuestos)", centro, 470);
-        
+
         ctx.textAlign = "left"
         ctx.font = "bold 20px Calibri";
-        ctx.fillText("$ "+precioPersona, centro+20, 410);
-        ctx.fillText("$ "+precioImpuestos, centro+20, 470);
+        ctx.fillText("$ " + precioPersona, centro + 20, 410);
+        ctx.fillText("$ " + precioImpuestos, centro + 20, 470);
         ctx.font = "20px Calibri";
-        
-        // const alerta = new Image();
-        // alerta.src="https://img.freepik.com/vector-premium/sirena-alarma_592324-17380.jpg?w=740";
-        // alerta.onload = () => {
-        //     // Dibuja la imagen completa en el canvas
-        //     ctx.drawImage(alerta, 75, 460, 70,70);
-        // };
         ctx.textAlign = "left"
         ctx.fillStyle = "#002060";
-        for(let y = 0; y < nota.length; y++){
-            ctx.fillText(nota[y], 70, 570+y*25);
+        for (let y = 0; y < nota.length; y++) {
+            ctx.fillText(nota[y], 70, 570 + y * 25);
         }
 
         ctx.textAlign = "center"
         drawTextRect(0, 580, canvas.width, 85, "", "#002060", "#ffffff");
-        
+
         ctx.font = "bold 20px Calibri";
         ctx.fillStyle = "#06304b";
-        //ctx.fillText("No aplica cambio y/o cancelaciones", centro, 600);
         ctx.fillText("Tarifa no reembolsable (No aplica cambio y/o cancelaciones)", centro, 615);
         ctx.fillText("Tarifa sujeto disponibilidad", centro, 645);
         ctx.textAlign = "left"
@@ -341,108 +330,110 @@ function ImagenCupon(element) {
         ctx.fillText("Saludos,", 10, 720);
         ctx.fillText("Noktos", 10, 750);
         const img = new Image();
-        img.src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCCnXXDdUwbDQkIKpIgnllhb-febE-E2isQQ&s";
-        img.onload = () => {
-            // Dibuja la imagen completa en el canvas
-            ctx.drawImage(img, 20, 18, 80,60);
-        };
-
-        const kone = new Image();
-        kone.src="https://cdn.worldvectorlogo.com/logos/kone-3.svg";
-        kone.onload = () => {
-            // Dibuja la imagen completa en el canvas
-            ctx.drawImage(kone, 150, 20, 110,55);
-        };
-        /*
-        // Fondo blanco
-        ctx.fillStyle = "#FFFFFF";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        const centro = canvas.width / 2;
-        // Títulos principales
-        ctx.font = "bold 18px Calibri";
-        ctx.textAlign = "left"
-        ctx.fillStyle = "#002060";
-        ctx.fillText("KONE México SA DE CV", centro, 90);
-        ctx.fillText("Cotización - Host", centro, 115);
-
-        ctx.textAlign = "center"
-        ctx.font = "bold 18px Calibri";
-
-        ctx.fillText("HOTEL", centro / 2, 150);
-        ctx.fillStyle = "#0070C0";
-        ctx.fillText(hotel, centro, 190)
-        ctx.fillStyle = "#002060";
-        ctx.fillText("Dirección", centro / 2, 220);
-        ctx.font = "18px Calibri";
-        for(let y = 0; y < direccion.length; y++){
-            ctx.fillText(direccion[y], centro, 260+y*25);
-        }
-        
-
-        ctx.font = "bold 18px Calibri";
-        ctx.fillText("Check in", centro / 2, 320);
-        ctx.fillText("Check out", centro + centro / 2, 320);
-        ctx.font = "18px Calibri";
-        ctx.fillText(checkin, centro / 2, 350);
-        ctx.fillText(checkout, centro + centro / 2, 350);
-        ctx.font = "bold 18px Calibri";
-        ctx.fillText("TOTAL DE NOCHES", centro / 2, 390);
-        ctx.fillText(noches, centro + centro / 2, 390);
-
-        ctx.fillText("PRECIO POR NOCHE POR PERSONA", centro / 2, 430);
-        ctx.fillStyle = "#E97132"
-        ctx.fillText("(SIN IMPUESTOS)", centro / 2, 450);
-        ctx.fillStyle = "#002060";
-        ctx.fillText("PRECIO POR NOCHE POR PERSONA", centro / 2, 490);
-        ctx.fillStyle = "#FF0000"
-        ctx.fillText("(INCLUYE IMPUESTOS)", centro / 2, 510);
-        ctx.textAlign = "right"
-        ctx.fillStyle = "#002060";
-        ctx.fillText(precioPersona, canvas.width - 20, 440);
-        ctx.fillText(precioImpuestos, canvas.width - 20, 500);
-        ctx.fillText("NOKTOS POR NOCHE", centro, 570);
-        ctx.fillText("DESAYUNO:", centro, 590);
-        ctx.fillStyle = "#FF0000"
-        ctx.fillText("NOTA:", centro, 630);
-        ctx.textAlign = "center"
-        ctx.fillStyle = "#002060";
-        ctx.fillText(noktos, centro + centro / 2, 570);
-        ctx.fillStyle = "#FF0000"
-        for(let y = 0; y < desayuno.length; y++){
-            ctx.fillText(desayuno[y], centro + centro / 2, 590+y*25);
-        }
-        drawTextRect(0, 640, 600, 85, "", "#002060", "#f8fc03");
-        ctx.font = "bold 18px Calibri";
-        ctx.fillStyle = "#002060";
-        ctx.fillText("No aplica cambio y/o cancelaciones", centro, 660);
-        ctx.fillText("No es reembolsable", centro, 685);
-        ctx.fillText("Tarifas sujetos a cambio sin previo aviso", centro, 710);
-        ctx.textAlign = "left"
-        ctx.fillText("Quedo al pendiente de el Vo.Bo.", 10, 760);
-        ctx.fillText("Saludos.", 10, 800);
-        const img = new Image();
         img.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCCnXXDdUwbDQkIKpIgnllhb-febE-E2isQQ&s";
         img.onload = () => {
-            // Dibuja la imagen completa en el canvas
-            ctx.drawImage(img, 80, 60, 80, 60);
+            ctx.drawImage(img, 20, 18, 80, 60);
         };
 
         const kone = new Image();
         kone.src = "https://cdn.worldvectorlogo.com/logos/kone-3.svg";
         kone.onload = () => {
-            // Dibuja la imagen completa en el canvas
             ctx.drawImage(kone, 150, 20, 110, 55);
-        };*/
+        };
     }, []);
-
-
 
     return (
         <div>
             <h2>{hotel}</h2>
-            <canvas ref={canvasRef} width={700} height={750}/>
+            <canvas ref={canvasRef} width={700} height={750} />
             <hr />
         </div>
-);
+    );
 
+}
+
+function ImagenCuponAerolinea(element) {
+    let height = 10
+    return CuponVuelo(element, height)
+}
+
+const imageNoktos = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCCnXXDdUwbDQkIKpIgnllhb-febE-E2isQQ&s"
+const imageKonne = "https://cdn.worldvectorlogo.com/logos/kone-3.svg"
+
+function CuponVuelo(element) {
+    const parseado = JSON.parse(element.replaceAll("!", ""));
+    const { tipoVuelo, vuelos, opcion, imagenUrl, tarifa, noktos, impuestos } = parseado.dataCupon;
+    const canvasRef = useRef(null);
+
+    console.log(parseado.dataCupon)
+
+    useEffect(() => {
+        let textHeight = 25
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext("2d");
+        const { width } = canvas;
+        let font = "600 18px Calibri";
+        let align = "left"
+        let color = "#002060"
+
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        writeText(ctx, 20, textHeight, { font, align, color: "#45bddf" }, "KONE México SA DE CV");
+        insertImage(ctx, 150, 55, width - 160, textHeight - 10, imageKonne)
+        insertImage(ctx, 90, 55, width - 270, textHeight - 10, imageNoktos)
+
+        textHeight = 45
+        writeText(ctx, 20, textHeight, { font, align, color: "#45bddf" }, "Cotización - Vuelo");
+
+        textHeight = 90
+        writeText(ctx, 20, textHeight, { font, align, color }, `${tipoVuelo}:`);
+        for (const vuelo of vuelos) {
+            textHeight += 20
+            writeText(ctx, 20, textHeight, { font: "18px Calibri", align, color }, `${vuelo}`);
+        }
+
+        textHeight = 180
+        writeText(ctx, 20, textHeight, { font, align, color }, `${opcion}`);
+        insertImage(ctx, width - 40, 40 * vuelos.length, 0, textHeight + 10, imagenUrl)
+
+        textHeight = 350
+        writeText(ctx, 20, textHeight, { font: "16px Calibri", align, color }, `${tarifa}`);
+        textHeight = 370
+        writeText(ctx, 20, textHeight, { font, align, color }, `Costo total: $${impuestos}`);
+        writeText(ctx, 250, textHeight, { font: "16px Calibri", align, color }, `${noktos} Noktos`);
+
+        textHeight = 430
+        writeText(ctx, 20, textHeight, { font, align, color: "#45bddf" }, `Tarifa no reembolsable, no endosable, cargos por cambio y nivelación tarifaria`);
+        font = "18px Calibri"
+        textHeight += 20
+        writeText(ctx, 20, textHeight, { font, align, color }, `Quedo al pendiente del Vo.Bo`);
+        textHeight += 20
+        writeText(ctx, 20, textHeight, { font, align, color }, `Saludos`);
+        textHeight += 20
+        writeText(ctx, 20, textHeight, { font, align, color }, `Noktos`);
+    }, []);
+
+    return (
+        <div>
+            <h2>{opcion}</h2>
+            <canvas ref={canvasRef} width={800} height={510} />
+            <hr />
+        </div>
+    );
+}
+
+function insertImage(ctx, width, height, x, y, url) {
+    const img = new Image();
+    img.src = url;
+    img.onload = () => {
+        ctx.drawImage(img, x, y, width, height);
+    };
+}
+
+function writeText(ctx, x, y, { font, align, color }, text) {
+    if (font) ctx.font = font;
+    if (align) ctx.textAlign = align;
+    if (color) ctx.fillStyle = color;
+    ctx.fillText(text, x, y)
 }
