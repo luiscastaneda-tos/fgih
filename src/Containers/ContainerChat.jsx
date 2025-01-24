@@ -42,5 +42,5 @@ const StyledContainerChat = styled.section`
   height: calc(100svh - 60px);
   max-width: 900px;
   display: grid;
-  grid-template-rows: 1fr 100px;
+  grid-template-rows: 1fr auto;
   gap: 5px;`

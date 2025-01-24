@@ -36,7 +36,7 @@ export const FormStyled = styled.form`
   align-items: center;
   max-width: 900px;
   width: 100%;
-  height: ${props => props.large ? "80px" : "50px"};
+  height: ${props => props.large ? "70px" : "50px"};
   `
 
 export const InputStyled = styled.input`
