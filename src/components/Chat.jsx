@@ -46,6 +46,8 @@ const SectionMessagesStyled = styled.section`
   flex-direction: column;
   justify-content: start;
   background-color: var(--blue-50);
+  border: 1px solid var(--blue-200);
+  border-radius: 10px;
   align-items: center;
   
   &::-webkit-scrollbar {

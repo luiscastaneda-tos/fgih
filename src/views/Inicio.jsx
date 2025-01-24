@@ -5,10 +5,10 @@ import { useLocalStorageList } from "../Hooks/useLocalStorage.js";
 import { useState, useEffect } from 'react'
 import { styled } from "styled-components";
 
-const URL = "http://localhost:3000/chat"
+const URL = "http://chatop-noktoss-env.eba-pbpppppe.us-east-2.elasticbeanstalk.com/chat"
 
 export function Inicio() {
-  const { remove, save, thread_local, threads = [] } = useLocalStorageList();
+  const { remove, save, thread_local, threads = [], removeList } = useLocalStorageList();
   const [messages, setMessages] = useState([])
   const [assistant, setAssistant] = useState({
     id: "asst_QwPVn8JiHf2ZnYppN6v60Cb9",
@@ -69,7 +69,7 @@ export function Inicio() {
   }, [messages])
 
   useEffect(() => {
-    if (thread_local != "" && messages.length == 0) {
+    if (thread_local != "") {
       fetchListMessages(thread_local)
     }
   }, [thread_local])
@@ -84,6 +84,7 @@ export function Inicio() {
         assistant={assistant}
         listThreads={threads}
         setAssistant={setAssistant}
+        removeList={removeList}
       />
       <ContainerChat
         messages={messages}
@@ -93,6 +94,7 @@ export function Inicio() {
     </MainStyled>
   )
 }
+
 
 const MainStyled = styled.main`
   width: 100vw;

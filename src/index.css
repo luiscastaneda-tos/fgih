@@ -46,7 +46,6 @@ input {
 body {
   background-color: var(--white);
   display: flex;
-  min-width: 300px;
 }
 
 

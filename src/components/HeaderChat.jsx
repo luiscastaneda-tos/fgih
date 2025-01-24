@@ -5,7 +5,7 @@ import { styled } from "styled-components";
 import { Drawer } from "./Drawer.jsx";
 import { useState } from "react";
 
-export const HeaderChat = ({ thread, fetchListMessages, remove, setMessages, assistant, setAssistant, listThreads = [] }) => {
+export const HeaderChat = ({ thread, fetchListMessages, remove, setMessages, assistant, setAssistant, listThreads = [], removeList }) => {
   const [openDrawer, setOpenDrawer] = useState(false)
 
   const handleClick = () => {
@@ -23,6 +23,7 @@ export const HeaderChat = ({ thread, fetchListMessages, remove, setMessages, ass
       {openDrawer &&
         <Drawer onClose={setOpenDrawer}>
           <ContainerNav
+            removeList={removeList}
             assistant={assistant}
             setAssistant={setAssistant}
             thread={thread}

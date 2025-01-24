@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
 import { SwitcherAssistant } from "../components/SwitcherAssistant.jsx";
+import { Button } from "../components/Utilities.jsx";
 import { ManagerChat } from "./ManagerChat.jsx";
 import { styled } from "styled-components";
 import { Link } from "wouter";
 
 export function ContainerNav(props) {
-  const { thread, fetchListMessages, assistant, setAssistant, handleClick, listThreads = [] } = props
+  const { thread, fetchListMessages, assistant, setAssistant, handleClick, listThreads = [], removeList } = props
 
   return (
     <ContainerStyled>
@@ -19,6 +20,7 @@ export function ContainerNav(props) {
         <>
           <HrStyled />
           <TitleStyled>Thread</TitleStyled>
+          <Button isalone onClick={removeList}>Borrar lista de threads</Button>
           <SelectStyled onChange={(e) => fetchListMessages(e.target.value)}>
             <option value="">Selecciona un thread</option>
             {
