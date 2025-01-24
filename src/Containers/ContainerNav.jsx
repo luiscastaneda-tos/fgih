@@ -108,7 +108,7 @@ const UlStyled = styled.ul`
 
 const SelectStyled = styled.select`
       width: 100%;
-      padding: .3rem;
+      padding: 10px;
       border-radius: 5px;
       background-color: var(--blue-100);
       border: 1px solid var(--blue-500);`
