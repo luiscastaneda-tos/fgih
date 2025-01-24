@@ -98,7 +98,7 @@ export function Inicio() {
 
 const MainStyled = styled.main`
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   display: flex;
   padding: 0 10px;
   flex-direction: column;
