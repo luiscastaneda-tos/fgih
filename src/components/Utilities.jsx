@@ -36,7 +36,7 @@ export const FormStyled = styled.form`
   align-items: center;
   max-width: 900px;
   width: 100%;
-  height: 50px;
+  height: ${props => props.large ? "80px" : "50px"};
   `
 
 export const InputStyled = styled.input`
@@ -45,6 +45,7 @@ export const InputStyled = styled.input`
   background-color: transparent;
   border: none;
   outline: none;
+  font-size: .95rem;
   padding: 8px 0 8px 14px;`
 
 export const IconStyled = styled.button`

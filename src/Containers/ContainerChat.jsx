@@ -39,8 +39,8 @@ export const ContainerChat = ({ messages, thread, setMessages }) => {
 
 const StyledContainerChat = styled.section`
   width: 100%;
-  height: calc(100dvh - 70px);
+  height: calc(100svh - 60px);
   max-width: 900px;
   display: grid;
-  grid-template-rows: 1fr 50px;
+  grid-template-rows: 1fr 100px;
   gap: 5px;`

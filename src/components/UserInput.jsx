@@ -32,7 +32,7 @@ export function UserInput({ onSubmit, isInMessage, thread }) {
           <p>Thread ID: {thread}</p>
         </div>
       }
-      <FormStyled onSubmit={handleSubmit} >
+      <FormStyled large onSubmit={handleSubmit} >
         <InputStyled
           value={valueInput}
           onChange={(e) => { setValueInput(e.target.value) }}
