@@ -25,7 +25,7 @@ width: 100%;
 display: grid;
 border-radius: 3px;
 grid-template-columns: 1fr;
-background-color: #d9d6fe;
+background-color: var(--gris-50);
 padding: 5px;
 gap: 5px;
 `
