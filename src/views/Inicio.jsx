@@ -22,13 +22,16 @@ export function Inicio() {
         return response.json()
       })
       .then(data => {
-        if (data.error) throw new Error(data)
+        if (data.error) {
+          console.log(data)
+          throw new Error(data)
+        }
         setMessages(data)
         save(value)
       })
       .catch((error) => {
         remove()
-        console.error('Error:', error);
+        console.error(error);
         alert("ha ocurrido un error, verifica la consola")
       });
   }
@@ -49,6 +52,11 @@ export function Inicio() {
         body: JSON.stringify(bodyObj),
       })
       const data = await res.json()
+
+      if (data.error) {
+        console.log(data)
+        throw new Error(data)
+      }
 
       setMessages([...messages, { role: "assistant", content: data.response.message.content[0].text.value }])
       if (!thread_local) save(data.response.thread_id)

@@ -7,7 +7,7 @@ export function Logo() {
 }
 
 const LogoStyled = styled.img`
-  width: 70px;
+  width: 55px;
 `
 
 

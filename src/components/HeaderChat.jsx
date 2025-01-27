@@ -17,6 +17,9 @@ export const HeaderChat = ({ thread, fetchListMessages, remove, setMessages, ass
     <NavStyled>
 
       <Logo />
+      {assistant &&
+        <SpanStyled onClick={() => { setOpenDrawer(true) }} >{assistant.name}</SpanStyled>
+      }
       <IconMenu onClick={() => { setOpenDrawer(true) }} ></IconMenu>
 
 
@@ -40,8 +43,21 @@ export const HeaderChat = ({ thread, fetchListMessages, remove, setMessages, ass
 
 const NavStyled = styled.nav`
   width: 100%;
-  padding: 10px;
+  padding: 10px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+`
+const SpanStyled = styled.span`
+  font-size: 12px;
+  color: var(--blue-50);
+  font-weight: 500;
+  text-transform: uppercase;
+  background-color: var(--blue-950);
+  padding: 5px 10px;
+  border-radius: 10px;
+  position: absolute;
+  right: 45px;
+  cursor: pointer;
 `

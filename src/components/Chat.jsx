@@ -47,6 +47,7 @@ const SectionMessagesStyled = styled.section`
   justify-content: start;
   background-color: var(--blue-50);
   border: 1px solid var(--blue-200);
+  box-shadow: 0 0 10px var(--blue-200);
   border-radius: 10px;
   align-items: center;
   

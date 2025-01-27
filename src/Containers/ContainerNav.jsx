@@ -77,7 +77,7 @@ background-color: var(--blue-900);
 const ContainerStyled = styled.div`
       width: 100%;
       display: flex;
-      padding: 10px;
+      padding: 10px 5px;
       flex-flow: column wrap;
       gap: 10px;
       `
