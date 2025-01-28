@@ -1,27 +1,5 @@
 import { useState } from 'react';
 
-export function useLocalStorage() {
-  const key = 'thread_id';
-  const storedValue = localStorage.getItem(key);
-
-  const [thread_local, setThread_local] = useState(storedValue ? JSON.parse(storedValue) : null);
-
-  const saveToLocalStorage = (newValue) => {
-    setThread_local(newValue);
-    localStorage.setItem(key, JSON.stringify(newValue));
-  };
-
-  const removeFromLocalStorage = () => {
-    setThread_local(null);
-    localStorage.removeItem(key);
-  };
-
-  return {
-    thread_local,
-    save: saveToLocalStorage,
-    remove: removeFromLocalStorage,
-  };
-}
 export function useLocalStorageList() {
   const keyList = 'threads';
   const liststored = localStorage.getItem(keyList);

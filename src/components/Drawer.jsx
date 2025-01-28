@@ -65,6 +65,7 @@ export function Drawer({ children, onClose }) {
         isopen={isVisible ? 1 : 0}
         onClick={(e) => e.stopPropagation()}
         onMouseDown={handleMouseDown}
+        onTouchStart={handleMouseDown}
       >
 
         <HandlerDrawerStyled>

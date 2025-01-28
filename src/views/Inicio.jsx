@@ -31,7 +31,7 @@ export function Inicio() {
       })
       .catch((error) => {
         remove()
-        console.error(error);
+        console.error(`${new Date()} \nError: \n`, error);
         alert("ha ocurrido un error, verifica la consola")
       });
   }
@@ -62,7 +62,7 @@ export function Inicio() {
       if (!thread_local) save(data.response.thread_id)
 
     } catch (error) {
-      console.error('Error:', error);
+      console.error(`${new Date()} \nError: \n`, error);
       alert("ha ocurrido un error, verifica la consola")
       setMessages([...messages, { role: "error", content: "Lo siento, ha ocurrido un error" }])
     }
