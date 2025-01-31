@@ -1,108 +1,23 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { ContainerChat } from "../Containers/ContainerChat.jsx";
-import { HeaderChat } from "../components/HeaderChat.jsx";
-import { useLocalStorageList } from "../Hooks/useLocalStorage.js";
-import { useState, useEffect } from 'react'
+import { assistantContext } from "../Context/contextsTypes.js";
+import { UserInput } from "../components/UserInput.jsx";
+import { Header } from "../Containers/Header.jsx";
+import { Chat } from "../components/Chat.jsx";
 import { styled } from "styled-components";
-
-const URL = "http://chatop-noktoss-env.eba-pbpppppe.us-east-2.elasticbeanstalk.com/chat"
+import { useContext } from "react";
 
 export function Inicio() {
-  const { remove, save, thread_local, threads = [], removeList } = useLocalStorageList();
-  const [messages, setMessages] = useState([])
-  const [assistant, setAssistant] = useState({
-    id: "asst_QwPVn8JiHf2ZnYppN6v60Cb9",
-    name: "Cotización"
-  });
+   const { assistant } = useContext(assistantContext)
 
-  async function fetchListMessages(value) {
-    if (!value) return
-    await fetch(`${URL}?thread_id=` + value)
-      .then(response => {
-        return response.json()
-      })
-      .then(data => {
-        if (data.error) {
-          console.log(data)
-          throw new Error(data)
-        }
-        setMessages(data)
-        save(value)
-      })
-      .catch((error) => {
-        remove()
-        console.error(`${new Date()} \nError: \n`, error);
-        alert("ha ocurrido un error, verifica la consola")
-      });
-  }
-
-  async function connectOpenAI() {
-    try {
-      const bodyObj = {
-        thread_id: thread_local,
-        content: messages[messages.length - 1].content,
-        assistantID: assistant.id
-      }
-
-      const res = await fetch(`${URL}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(bodyObj),
-      })
-      const data = await res.json()
-
-      if (data.error) {
-        console.log(data)
-        throw new Error(data)
-      }
-
-      setMessages([...messages, { role: "assistant", content: data.response.message.content[0].text.value }])
-      if (!thread_local) save(data.response.thread_id)
-
-    } catch (error) {
-      console.error(`${new Date()} \nError: \n`, error);
-      alert("ha ocurrido un error, verifica la consola")
-      setMessages([...messages, { role: "error", content: "Lo siento, ha ocurrido un error" }])
-    }
-  }
-
-  useEffect(() => {
-    if (messages.length == 0) return
-    if (messages[messages.length - 1].role == "user") {
-      connectOpenAI()
-    }
-    console.log(messages)
-  }, [messages])
-
-  useEffect(() => {
-    if (thread_local != "") {
-      fetchListMessages(thread_local)
-    }
-  }, [thread_local])
-
-  return (
-    <MainStyled>
-      <HeaderChat
-        thread={thread_local}
-        remove={remove}
-        setMessages={setMessages}
-        fetchListMessages={fetchListMessages}
-        assistant={assistant}
-        listThreads={threads}
-        setAssistant={setAssistant}
-        removeList={removeList}
-      />
-      <ContainerChat
-        messages={messages}
-        thread={thread_local}
-        setMessages={setMessages}
-      />
-    </MainStyled>
-  )
+   return (
+      <MainStyled>
+         <Header assistant={assistant} />
+         <StyledContainerChat>
+            <Chat />
+            <UserInput />
+         </StyledContainerChat>
+      </MainStyled>
+   )
 }
-
 
 const MainStyled = styled.main`
   width: 100vw;
@@ -115,3 +30,11 @@ const MainStyled = styled.main`
   position: relative;
   overflow: hidden;
 `
+const StyledContainerChat = styled.section`
+  width: 100%;
+  height: calc(100svh - 60px);
+  max-width: 900px;
+  padding-bottom: 10px;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 5px;`

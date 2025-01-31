@@ -1,47 +1,39 @@
-/* eslint-disable react/prop-types */
-import { SendIcon } from "../assets/icons/icons.jsx";
-import { FormStyled, InputStyled, IconStyled } from "./Utilities.jsx";
-import { useState } from "react";
+import { threadContext, messageContext } from "../Context/contextsTypes.js";
+import { InputSend } from "./InputSend.jsx";
+import { useContext } from "react";
 
-export function UserInput({ onSubmit, isInMessage, thread }) {
-  const [valueInput, setValueInput] = useState("")
+export function UserInput() {
+   const { thread } = useContext(threadContext)
+   const { addMessage, loading } = useContext(messageContext)
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+   const handleSubmit = (value) => {
+      if (loading) return
+      if (!value) return
+      addMessage(value)
+   }
 
-    if (isInMessage) return
-    if (valueInput == "") return
-
-    onSubmit(valueInput)
-    setValueInput("")
-  }
-
-  async function handleCopiar() {
-    try {
-      await navigator.clipboard.writeText(thread);
-    } catch (err) {
-      alert('Error al copiar: ', err);
-    }
-  }
-
-  return (
-    <div>
-      {
-        thread &&
-        <div className="container__thread" onClick={handleCopiar} tabIndex={0}>
-          <p>Thread ID: {thread}</p>
-        </div>
+   async function handleCopiar() {
+      try {
+         await navigator.clipboard.writeText(thread);
+      } catch (err) {
+         alert('Error al copiar: ', err);
       }
-      <FormStyled large={1} onSubmit={handleSubmit} >
-        <InputStyled
-          value={valueInput}
-          onChange={(e) => { setValueInput(e.target.value) }}
-          placeholder="Hola chat, necesito tu ayuda..." />
-        <IconStyled type="submit">
-          <SendIcon />
-        </IconStyled>
-      </FormStyled>
-    </div>
-  )
+   }
+
+   return (
+      <div>
+         {
+            thread &&
+            <div className="container__thread" onClick={handleCopiar} tabIndex={0}>
+               <p>Thread ID: {thread}</p>
+            </div>
+         }
+         <InputSend
+            onSubmit={handleSubmit}
+            placeholder={"Chat, hazme la cotización..."}
+            large={true}
+         />
+      </div>
+   )
 }
 

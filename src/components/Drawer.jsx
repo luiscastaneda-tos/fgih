@@ -47,9 +47,9 @@ export function Drawer({ children, onClose }) {
   const handleTouchMove = (e) => {
     if (!isDragging) return;
 
-    const diff = e.touches[0].clientY - startPosY; // Calculamos el desplazamiento táctil
+    const diff = e.touches[0].clientY - startPosY;
 
-    if (diff > 100) {
+    if (diff > 30) {
       handleClose();
       setIsDragging(false);
     }
@@ -64,7 +64,6 @@ export function Drawer({ children, onClose }) {
 
   useEffect(() => {
     if (isDragging) {
-      // Añadimos eventos de mouse y touch cuando se está arrastrando
       window.addEventListener("mousemove", handleMouseMove);
       window.addEventListener("mouseup", handleMouseUp);
       window.addEventListener("touchmove", handleTouchMove);
@@ -80,9 +79,9 @@ export function Drawer({ children, onClose }) {
   }, [isDragging]);
 
   return (
-    <ContainerDrawerStyled onClick={handleClose} isopen={isVisible ? 1 : 0}>
+    <ContainerDrawerStyled onClick={handleClose} $isopen={isVisible ? 1 : 0}>
       <DrawerStyled
-        isopen={isVisible ? 1 : 0}
+        $isopen={isVisible ? 1 : 0}
         onClick={(e) => e.stopPropagation()}
         onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart}
@@ -103,7 +102,7 @@ const ContainerDrawerStyled = styled.div`
   position: fixed;
   inset: 0;
   z-index: 123456789876543;
-  opacity: ${(props) => (props.isopen ? "1" : "0")};
+  opacity: ${(props) => (props.$isopen ? "1" : "0")};
   display: block;
   transition: opacity 0.3s ease-in-out;
 `;
@@ -121,7 +120,7 @@ const DrawerStyled = styled.div`
   border-radius: 16px 16px 0 0;
   position: fixed;
   right: 0;
-  bottom: ${(props) => (props.isopen ? "0" : "-80vh")};
+  bottom: ${(props) => (props.$isopen ? "0" : "-80vh")};
   transform: translateX(-1%);
   z-index: 1234567890;
   display: flex;

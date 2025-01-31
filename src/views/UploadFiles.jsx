@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { HeaderChat } from "../components/HeaderChat.jsx";
+import { Header } from "../Containers/Header.jsx";
 import { useState } from "react";
 import * as XLSX from "xlsx"
 
@@ -88,7 +88,7 @@ export function UploadFiles() {
 
   return (
     <main className="upload">
-      <HeaderChat></HeaderChat>
+      <Header></Header>
 
       {!loggin && <LogginUser handleSubmit={handleSubmitPassword} handleOnChange={handleOnChangePassword} message={message} password={password} />}
 

@@ -1,23 +1,40 @@
-/* eslint-disable react/prop-types */
+import { assistantContext } from "../Context/contextsTypes.js";
+import { useContext } from "react";
 import { styled } from "styled-components";
 
-export function SwitcherAssistant({ assistant, setAssistant }) {
+export function SwitcherAssistant() {
+   const { assistant, setAssistant } = useContext(assistantContext)
 
-  return (
-    <SwitcherAssistantStyled>
+   const handleSelect = (assistantObject) => {
+      setAssistant(assistantObject)
+   }
 
-      {
-        assistants.map(({ id, name }) => {
-          let selected = false
-          if (assistant.id == id) selected = true
-          return (<ButtonSwitcherStyled selected={selected} onClick={() => { setAssistant({ id, name }) }} key={id}  >
-            {name}
-          </ButtonSwitcherStyled>)
-        })
-      }
+   return (
+      <SwitcherAssistantStyled>
 
-    </SwitcherAssistantStyled>
-  )
+         {
+            assistants.map(
+               ({ id, name }) => {
+
+                  let selected = false
+
+                  if (assistant.id == id) selected = true
+
+                  return (
+                     <ButtonSwitcherStyled
+                        key={id}
+                        selected={selected}
+                        onClick={() => { handleSelect({ id, name }) }}
+                     >
+                        {name}
+                     </ButtonSwitcherStyled>)
+
+               }
+            )
+         }
+
+      </SwitcherAssistantStyled>
+   )
 }
 
 const SwitcherAssistantStyled = styled.aside`
@@ -64,19 +81,19 @@ transition: background-color .2s ease-out;
 `
 
 let assistants = [
-  {
-    id: "asst_bzwg7fR39wMhTewlkd10Su4K",
-    name: "Reportes",
-    selected: false
-  },
-  {
-    id: "asst_QwPVn8JiHf2ZnYppN6v60Cb9",
-    name: "Cotización",
-    selected: false
-  },
-  {
-    id: "asst_zJZp1OrUaQEYD3DcXjBI6Q5O",
-    name: "Vuelo",
-    selected: false
-  }
+   {
+      id: "asst_bzwg7fR39wMhTewlkd10Su4K",
+      name: "Reportes",
+      selected: false
+   },
+   {
+      id: "asst_QwPVn8JiHf2ZnYppN6v60Cb9",
+      name: "Cotización",
+      selected: false
+   },
+   {
+      id: "asst_zJZp1OrUaQEYD3DcXjBI6Q5O",
+      name: "Vuelo",
+      selected: false
+   }
 ]

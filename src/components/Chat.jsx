@@ -1,10 +1,11 @@
-/* eslint-disable react/prop-types */
 import { Message } from "./Message/Message.jsx";
 import { LoadMessage } from "./LoadMessage/LoadMessage.jsx";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useContext } from "react";
+import { messageContext } from "../Context/contextsTypes.js";
 import { styled } from "styled-components";
 
-export const Chat = ({ messages, inMessage }) => {
+export const Chat = () => {
+  const { messages, loading } = useContext(messageContext);
   const divRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -31,7 +32,7 @@ export const Chat = ({ messages, inMessage }) => {
       }
 
       {
-        inMessage && <LoadMessage handleShow={scrollToBottom} />
+        loading && <LoadMessage handleShow={scrollToBottom} />
       }
 
     </SectionMessagesStyled>
