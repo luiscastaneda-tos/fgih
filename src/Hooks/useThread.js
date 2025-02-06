@@ -56,4 +56,5 @@ export function useThread() {
 }
 
 // const URL = "http://localhost:3000/chat?thread_id="
-const URL = "http://chatop-noktoss-env.eba-pbpppppe.us-east-2.elasticbeanstalk.com/chat?thread_id="
+const URL = "http://chatop.noktos.com/chat?thread_id="
+// const URL = "http://chatop-noktoss-env.eba-pbpppppe.us-east-2.elasticbeanstalk.com/chat?thread_id="

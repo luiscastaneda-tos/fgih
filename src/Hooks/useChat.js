@@ -49,7 +49,8 @@ export function useChat() {
    return { messages, setMessages, addMessage, loading };
 }
 
-const URL = "http://chatop-noktoss-env.eba-pbpppppe.us-east-2.elasticbeanstalk.com/chat"
+const URL = "http://chatop.noktos.com/chat"
+// const URL = "http://chatop-noktoss-env.eba-pbpppppe.us-east-2.elasticbeanstalk.com/chat"
 // const URL = "http://localhost:3000/chat"
 const PARAMS = {
    method: 'POST',

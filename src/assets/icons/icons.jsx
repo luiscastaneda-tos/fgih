@@ -3,7 +3,7 @@ import { Link } from "wouter";
 
 
 
-export function Logo({ width = 85, height = 55 }) {
+export function Logo({ width = 60, height = 42 }) {
    return (
       <Link href="/" >
          <svg
